@@ -1,19 +1,16 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Invoice.Models
+namespace InvoiceProj.Models
 {
-    public class InvoiceItem
+    public class Item
     {
-        [Key]
-        public Guid Id { get; set; }
         [Required]
+        [Key]
         public int ItemCode { get; set; }
         [Required]
-        [StringLength(140, MinimumLength = 1)]
+        [StringLength(140 , MinimumLength =3)]
         public String ItemName { get; set; }
-        [Required]
-        public int Quantity { get; set; }
         [Required]
         public Double Price { get; set; }
     }

@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Invoice.Models;
+using InvoiceProj.Models;
 
-namespace Invoice.Controllers;
+namespace InvoiceProj.Controllers;
 
 public class HomeController : Controller
 {

@@ -1,4 +1,4 @@
-﻿namespace Invoice.Models
+﻿namespace InvoiceProj.Models
 {
     public enum PaymentMethodEnum
     {

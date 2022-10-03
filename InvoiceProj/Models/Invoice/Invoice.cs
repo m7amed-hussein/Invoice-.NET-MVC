@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Invoice.Models
+namespace InvoiceProj.Models
 {
 	public class Invoice
 	{
@@ -12,9 +12,9 @@ namespace Invoice.Models
         [Required]
         public PaymentMethodEnum PaymentMethod { get; set; }
         [StringLength(50)]
-        public String? CustomerName { get; set; }
+        public String CustomerName { get; set; }
         [StringLength(50)]
-        public String? Description { get; set; }
+        public String Description { get; set; }
         [Required]
         [MinLength(3)]
         public ICollection<InvoiceItem> Items { get; set; }
