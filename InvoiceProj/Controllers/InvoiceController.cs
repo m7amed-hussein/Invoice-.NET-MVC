@@ -11,7 +11,7 @@ namespace InvoiceProj.Controllers
     {
         private readonly IInvoiceRepository<Invoice> _invoiceRepository;
 
-        public InvoiceController(ILogger<InvoiceController> logger, IInvoiceRepository<Invoice> invoiceRepository)
+        public InvoiceController(IInvoiceRepository<Invoice> invoiceRepository)
         {
             _invoiceRepository = invoiceRepository;
         }
@@ -19,7 +19,7 @@ namespace InvoiceProj.Controllers
         {
             var invoices = _invoiceRepository.list();
             var invoiceResult = new List<InvoiceDto>();
-            //TODO:Here we can use AutoMapper to map the Invoice to InvoiceDto
+            //TODO: use AutoMapper
             foreach (var invoice in invoices)
             {
                 invoiceResult.Add(new InvoiceDto()
@@ -141,13 +141,12 @@ namespace InvoiceProj.Controllers
                 _invoiceRepository.update(id, invoice);
                 return RedirectToAction(nameof(Index));
             }
-            //TODO:Must return the same view with the same data and return model state errors
+            //TODO:return model state errors
             return View(invoiceDto);
         }
         public async Task<ActionResult> Delete(Guid id)
         {
-            Console.WriteLine(id);
-            //TODO: Delete the invoice must be done by an admin user
+            //TODO: Add Validation if invoice is null
             _invoiceRepository.delete(id);
 
             return RedirectToAction(nameof(Index));

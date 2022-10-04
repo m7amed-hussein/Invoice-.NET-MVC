@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace InvoiceProj.Models
 {
+    
 	public class Invoice
 	{
         [Required]

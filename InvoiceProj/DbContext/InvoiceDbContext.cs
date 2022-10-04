@@ -16,9 +16,9 @@ public class InvoiceDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
     modelBuilder
-        .Entity<InvoiceItem>()
-        .HasOne(e => e.Invoice)
-        .WithMany()
-        .OnDelete(DeleteBehavior.ClientCascade);
+        .Entity<Invoice>()
+        .HasMany(e => e.Items)
+        .WithOne()
+        .OnDelete(DeleteBehavior.Cascade);
 }
 }
