@@ -1,0 +1,57 @@
+@model IEnumerable<InvoiceDto>
+<div class="card">
+  <div class="card-header shadow-sm border-gray-500  py-6">
+
+    <div class="card-toolbar w-100 justify-content-between ">
+      <a  type="button" class="btn btn-success fs-7 p-3" asp-action = "Create">Create New Invoice</a>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Customer Name</th>
+            <th scope="col">Creation Date</th>
+            <th scope="col">Description</th>
+            <th scope="col">PaymentMethod</th>
+            <th scope="col">TotalPayment</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @foreach (var item in Model)
+          {
+            <tr>
+              <td>@item.CustomerName</td>
+              <td>@item.CreationDate</td>
+              <td>@item.Description</td>
+              <td>@item.PaymentMethod</td>
+              <td>@item.TotalPayment</td>
+              <td>
+                <a 
+                  class="fa fa-trash" aria-hidden="true" aria-hidden="true"
+                  asp-action="Delete" asp-route-id="@item.Id">
+                  Delete
+                </a>
+                <a
+                  asp-action="Edit" asp-route-id="@item.Id">
+                  Edit
+                </a>
+                <a
+                asp-action="Details" asp-route-id="@item.Id">
+                Details
+                </a>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<script>
+    function toggle_modula(id) {
+        document.getElementById(id).innerHTML = '<div class="ui container"><div class ="ui modal"><div class="header">Hi There!</div></div></div><div class ="Content">hello World</div>';
+        run();
+    }
+    function run() {
+        $('.ui.modal').modal('toggle');
+}
+</script>

@@ -1,5 +1,6 @@
 ﻿using InvoiceProj;
 using InvoiceProj.Models;
+using InvoiceProj.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,7 @@ builder.Services.AddDbContext<InvoiceDbContext>(options =>
         
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<IInvoiceRepository<Invoice>, InvoiceRepository>();
 
 var app = builder.Build();
 
@@ -30,7 +32,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Invoice}/{action=Index}");
 
 app.Run();
 

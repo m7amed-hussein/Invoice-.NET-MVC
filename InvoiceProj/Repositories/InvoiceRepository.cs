@@ -1,3 +1,6 @@
+using InvoiceProj.Models;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 namespace InvoiceProj.Repositories
 {
     
@@ -13,22 +16,25 @@ namespace InvoiceProj.Repositories
             _context.Invoices.Add(entity);
             _context.SaveChanges();
         }
-        public void delete(int id)
+        public void delete(Guid id)
         {
-            var invoice = _context.Invoices.Find(id);
+            var invoice =  _context.Invoices.Find(id);
             _context.Invoices.Remove(invoice);
             _context.SaveChanges();
         }
-        public Invoice find(int id)
+        public Invoice find(Guid id)
         {
-            return _context.Invoices.Find(id);
+            return  _context.Invoices.Where(x=>x.Id == id).Include(x => x.Items).AsNoTracking().FirstOrDefault();
         }
         public IList<Invoice> list()
         {
-            return _context.Invoices.ToList();
+            var invoices = _context.Invoices
+            .Include(x => x.Items).AsNoTracking().ToList();
+            return  invoices;
         }
-        public void update(int id, Invoice entity)
+        public void update(Guid id, Invoice entity)
         {
+            //var invoice = _context.Invoices.Find(id);
             _context.Invoices.Update(entity);
             _context.SaveChanges();
         }

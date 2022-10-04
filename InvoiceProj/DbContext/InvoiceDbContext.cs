@@ -13,5 +13,12 @@ public class InvoiceDbContext : DbContext
     public InvoiceDbContext(DbContextOptions<InvoiceDbContext> options): base(options)
     { }
 
-    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+{
+    modelBuilder
+        .Entity<InvoiceItem>()
+        .HasOne(e => e.Invoice)
+        .WithMany()
+        .OnDelete(DeleteBehavior.ClientCascade);
+}
 }

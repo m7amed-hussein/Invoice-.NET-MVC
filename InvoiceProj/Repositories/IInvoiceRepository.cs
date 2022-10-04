@@ -3,10 +3,10 @@ namespace InvoiceProj.Repositories
     public interface IInvoiceRepository<TEntity>
     {
         IList<TEntity> list();
-        TEntity find(int id);
+        TEntity find(Guid id);
         void add(TEntity entity);
-        void update(int id, TEntity entity);
-        void delete(int id);
+        void update(Guid id, TEntity entity);
+        void delete(Guid id);
         List<TEntity> search(string term);
     }
 }
