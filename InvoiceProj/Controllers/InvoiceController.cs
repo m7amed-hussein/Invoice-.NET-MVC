@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using InvoiceProj.Models;
 using InvoiceProj.Dtos;
+using InvoiceProj.Helpers;
 using System.Collections.Generic;
 using System.Linq;
 namespace InvoiceProj.Controllers
@@ -38,8 +39,10 @@ namespace InvoiceProj.Controllers
         public async Task<ActionResult> Details(Guid id)
         {
             var invoice = _invoiceRepository.find(id);
-            //TODO:Validation if invoice is null
-            Console.WriteLine(invoice.CustomerName);
+            if(invoice == null)
+            {
+                return NotFound();
+            }
             var invoiceResult = new InvoiceDetailedDto()
             {
                 Id = invoice.Id,
@@ -60,13 +63,11 @@ namespace InvoiceProj.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(CreateInvoiceDto invoiceDto)
         {
-            //TODO: check if model state is valid
-            Console.WriteLine(invoiceDto.Items[0].ItemName);
-            Console.WriteLine(invoiceDto.Description);
-            Console.WriteLine(invoiceDto.CustomerName);
-            Console.WriteLine(invoiceDto.PaymentMethod);
-
-
+            if(string.IsNullOrEmpty(invoiceDto.CustomerName) ||
+                invoiceDto.Items.Count == 0){
+                //TODO: return validation message
+                return View(invoiceDto);
+            }
             var invoice = new Invoice()
             {
                 Id = Guid.NewGuid(),
@@ -76,9 +77,9 @@ namespace InvoiceProj.Controllers
                 PaymentMethod = invoiceDto.PaymentMethod,
             };
             invoice.Items = new List<InvoiceItem>();
+
             foreach (var item in invoiceDto.Items)
             {
-                Console.WriteLine(item.ItemName);
                 if (ValidItem(item))
                 {
                     invoice.Items.Add(new InvoiceItem()
@@ -93,8 +94,8 @@ namespace InvoiceProj.Controllers
 
             }
             double price = invoice.Items.Sum(x => x.Price * x.Quantity);
-            //TODO: Save Max Price in Application Constants
-            if (price > 10000 && invoice.PaymentMethod == PaymentMethodEnum.Credit)
+
+            if (price > ApplicationConsts.MaxPaymentForCredit && invoice.PaymentMethod == PaymentMethodEnum.Credit)
             {
                 //TODO: Add validation message
                 return View(invoiceDto);
@@ -126,9 +127,6 @@ namespace InvoiceProj.Controllers
         {
             if (ModelState.IsValid)
             {
-                Console.WriteLine(invoiceDto.Id);
-                Console.WriteLine(id);
-
                 var invoice = new Invoice()
                 {
                     Id = id,
@@ -141,14 +139,13 @@ namespace InvoiceProj.Controllers
                 _invoiceRepository.update(id, invoice);
                 return RedirectToAction(nameof(Index));
             }
-            //TODO:return model state errors
+            //TODO:(Validation Message)return model state errors
             return View(invoiceDto);
         }
         public async Task<ActionResult> Delete(Guid id)
         {
             //TODO: Add Validation if invoice is null
             _invoiceRepository.delete(id);
-
             return RedirectToAction(nameof(Index));
         }
 

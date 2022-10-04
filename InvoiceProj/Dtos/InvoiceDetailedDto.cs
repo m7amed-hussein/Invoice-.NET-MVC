@@ -12,7 +12,7 @@ namespace InvoiceProj.Dtos
         
         public String Description { get; set; }
         
-        //TODO : Create InvoiceItemDto Not using InvoiceItem
+        //TODO : Create InvoiceItemDto
         public List<InvoiceItem> Items { get; set; }
     }
 }

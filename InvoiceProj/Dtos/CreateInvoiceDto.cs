@@ -7,6 +7,7 @@ namespace InvoiceProj.Dtos
     {
         public CreateInvoiceDto()
         {
+        //TODO: Dynamic Item Size
             Items = new List<InvoiceItem>(10);
         }
         public Guid Id { get; set; }
@@ -15,7 +16,7 @@ namespace InvoiceProj.Dtos
         
         public String Description { get; set; }
         
-        //TODO : Create InvoiceItemDto Not using InvoiceItem
+        //TODO : Create InvoiceItemDto 
         public List<InvoiceItem> Items { get; set; }
     }
 }
